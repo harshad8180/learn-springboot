@@ -1,6 +1,7 @@
 package com.example.product.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,12 @@ public class CategoryService {
 
 	// create category
 	public CategoryDTO createCategory(CategoryDTO categoryDTO) {
+		
+		Optional<Category> optionalCategory = categoryRepository.findByName(categoryDTO.getName());
+		if(optionalCategory.isPresent()) {
+			throw new RuntimeException("Category already exists");
+		}
+		
 		Category category = CategoryMapper.toCategoryEntity(categoryDTO);
 		category = categoryRepository.save(category);
 		return CategoryMapper.toCategoryDTO(category);
