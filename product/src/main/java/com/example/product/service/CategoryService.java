@@ -36,8 +36,15 @@ public class CategoryService {
 		return CategoryMapper.toCategoryDTO(category);
 		
 	}
-	
-	
-	
+
+
 	// delete category
+	public String deleteCategory(Long id) {
+		categoryRepository.deleteById(id);
+		return "Category "+id+" has been deleted!";
+		
+	}
+	
+	
+	
 }
