@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.product.dto.CategoryDTO;
+import com.example.product.exception.CategoryAlreadyExistsException;
 import com.example.product.service.CategoryService;
 
 import lombok.AllArgsConstructor;
@@ -32,8 +33,16 @@ public class CategoryController {
 	
 	// create Categories
 	@PostMapping
-	public ResponseEntity<CategoryDTO>  createCategory(@RequestBody CategoryDTO categoryDTO) {
-		return new ResponseEntity<>(categoryService.createCategory(categoryDTO), HttpStatus.CREATED);
+	public ResponseEntity<?>  createCategory(@RequestBody CategoryDTO categoryDTO) {
+		
+		try {
+			CategoryDTO savedCategory = categoryService.createCategory(categoryDTO);
+			return ResponseEntity.status(HttpStatus.CREATED).body(savedCategory);
+		}catch (CategoryAlreadyExistsException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+		}
+		
+//		return new ResponseEntity<>(categoryService.createCategory(categoryDTO), HttpStatus.CREATED);
 	}
 	
 	

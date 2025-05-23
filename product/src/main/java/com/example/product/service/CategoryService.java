@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.product.dto.CategoryDTO;
 import com.example.product.entity.Category;
+import com.example.product.exception.CategoryAlreadyExistsException;
 import com.example.product.mapper.CategoryMapper;
 import com.example.product.repository.CategoryRepository;
 
@@ -28,7 +29,7 @@ public class CategoryService {
 		
 		Optional<Category> optionalCategory = categoryRepository.findByName(categoryDTO.getName());
 		if(optionalCategory.isPresent()) {
-			throw new RuntimeException("Category already exists");
+			throw new CategoryAlreadyExistsException("Category " +categoryDTO.getName()+ " already exists!");
 		}
 		
 		Category category = CategoryMapper.toCategoryEntity(categoryDTO);
