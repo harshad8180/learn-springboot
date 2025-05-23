@@ -1,5 +1,7 @@
 package com.example.product.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.example.product.dto.CategoryDTO;
@@ -14,6 +16,12 @@ import lombok.AllArgsConstructor;
 public class CategoryService {
 	private CategoryRepository categoryRepository;
 	
+	// get all categories
+	public List<CategoryDTO> getAllCategories(){
+		return categoryRepository.findAll().stream().map(CategoryMapper::toCategoryDTO).toList();
+	}
+	
+
 	// create category
 	public CategoryDTO createCategory(CategoryDTO categoryDTO) {
 		Category category = CategoryMapper.toCategoryEntity(categoryDTO);
@@ -21,7 +29,6 @@ public class CategoryService {
 		return CategoryMapper.toCategoryDTO(category);
 	}
 	
-	// get all categories
 	
 	// get category by id
 	
