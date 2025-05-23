@@ -28,9 +28,16 @@ public class CategoryService {
 		category = categoryRepository.save(category);
 		return CategoryMapper.toCategoryDTO(category);
 	}
-	
-	
+
+
 	// get category by id
+	public CategoryDTO getCategoryById(Long id) {
+		Category category = categoryRepository.findById(id).orElseThrow(()->new RuntimeException("Category not found"));
+		return CategoryMapper.toCategoryDTO(category);
+		
+	}
+	
+	
 	
 	// delete category
 }
