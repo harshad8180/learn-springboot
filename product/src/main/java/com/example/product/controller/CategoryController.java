@@ -13,7 +13,7 @@ import com.example.product.service.CategoryService;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/categories")
 @AllArgsConstructor
 public class CategoryController {
 	private CategoryService categoryService;
