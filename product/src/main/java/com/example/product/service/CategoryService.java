@@ -7,7 +7,10 @@ import com.example.product.entity.Category;
 import com.example.product.mapper.CategoryMapper;
 import com.example.product.repository.CategoryRepository;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class CategoryService {
 	private CategoryRepository categoryRepository;
 	
