@@ -16,7 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.product.dto.ProductDTO;
 import com.example.product.service.ProductService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+
+@Tag(name = "Product REST API CRUD operation", description = "CREATE, READ, UPDATE and DELETE operations for Product REST API")
 
 @RestController
 @RequestMapping("/api/products")
@@ -26,6 +31,7 @@ public class ProductController {
 	private ProductService productService;
 
 	// get all Products
+	@Operation(summary = "Fetch all products", description = "REST API to fetch all products.")
 	@GetMapping
 	public List<ProductDTO> getAllProducts() {
 		return productService.getAllProducts();
@@ -33,24 +39,32 @@ public class ProductController {
 	}
 
 	// createProduct
+	@Operation(summary = "Create product", description = "REST API to create product.")
+
+	@ApiResponse(responseCode = "201", description = "CREATED")
+
 	@PostMapping
 	public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) {
 		return new ResponseEntity<>(productService.createProduct(productDTO), HttpStatus.CREATED);
 	}
 
 	// get product by id
+	@Operation(summary = "Fetch product by product ID", description = "REST API to Fetch product by product ID.")
+
 	@GetMapping("/{id}")
 	public ProductDTO getProductById(@PathVariable Long id) {
 		return productService.getProductById(id);
 	}
 
 	// updateProduct
+	@Operation(summary = "Update product by product ID", description = "REST API to Update product by product ID.")
 	@PutMapping("/{id}")
 	public ProductDTO updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
-		return productService.updateProduct(id,productDTO);
+		return productService.updateProduct(id, productDTO);
 	}
 
 	// delete product
+	@Operation(summary = "Delete product by product ID", description = "REST API to Delete product by product ID.")
 	@DeleteMapping("/{id}")
 	public String deleteProduct(@PathVariable Long id) {
 		return productService.deleteProduct(id);
