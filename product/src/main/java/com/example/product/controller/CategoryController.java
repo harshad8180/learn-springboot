@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,6 +41,8 @@ public class CategoryController {
 	@Operation(summary = "Create category", description = "REST API to create category.")
 
 	@ApiResponse(responseCode = "201", description = "CREATED")
+	
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 
 	@PostMapping
 	public ResponseEntity<?> createCategory(@RequestBody CategoryDTO categoryDTO) {
@@ -57,6 +60,9 @@ public class CategoryController {
 
 	// delete category
 	@Operation(summary = "Delete category by category ID", description = "REST API to Delete category by category ID.")
+	
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	
 	@DeleteMapping("/{id}")
 	public String deleteCategory(@PathVariable Long id) {
 		return categoryService.deleteCategory(id);
